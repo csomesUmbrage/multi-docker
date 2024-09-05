@@ -14,4 +14,10 @@ after_success:
   - docker build -t coltonumbrage/multi-worker ./worker
   - docker build -t coltonumbrage/multi-server ./server
   - docker build -t coltonumbrage/multi-nginx ./nginx
-  - 
+  #login to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # take those images and push them to docker hub
+  - docker push coltonumbrage/multi-client
+  - docker push coltonumbrage/multi-nginx
+  - docker push coltonumbrage/multi-server 
+  - docker push coltonumbrage/multi-worker
