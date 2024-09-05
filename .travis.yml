@@ -1,0 +1,17 @@
+language: generic
+sudo: required
+services: 
+  - docker 
+
+before_install: 
+  - docker build -t coltonumbrage/react-test -f ./client/Dockerfile.dev ./client
+
+script: 
+  - docker run -e CI=true coltonumbrage/react-test npm test
+
+after_success: 
+  - docker build -t coltonumbrage/multi-client ./client
+  - docker build -t coltonumbrage/multi-worker ./worker
+  - docker build -t coltonumbrage/multi-server ./server
+  - docker build -t coltonumbrage/multi-nginx ./nginx
+  - 
